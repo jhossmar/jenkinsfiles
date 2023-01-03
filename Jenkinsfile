@@ -5,7 +5,7 @@ pipeline {
         stage('clone') {
             steps {
                 dir('backend'){
-                   git branch: 'master', 'https://github.com/jhossmar/MusicShopDjango.git'
+                   git branch: 'master', url: 'https://github.com/jhossmar/MusicShopDjango.git'
 
                 }
                 dir('frontend'){
