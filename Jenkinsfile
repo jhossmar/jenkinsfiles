@@ -5,11 +5,11 @@ pipeline {
         stage('clone') {
             steps {
                 dir('backend'){
-                   git 'https://github.com/jhossmar/MusicShopDjango.git'
+                   git branch: 'master', 'https://github.com/jhossmar/MusicShopDjango.git'
 
                 }
                 dir('frontend'){
-                    git 'https://github.com/jhossmar/proyecto-final-vue.git'
+                    git branch: 'main', url: 'https://github.com/jhossmar/proyecto-final-vue.git'
                 }
             }
         }
