@@ -1,5 +1,5 @@
-def dev_env=192.168.100.115;
-def qa_env=192.168.100.81;
+def dev_env='192.168.100.115';
+def qa_env='192.168.100.81';
 pipeline {
     agent {label 'DEV'}
 
