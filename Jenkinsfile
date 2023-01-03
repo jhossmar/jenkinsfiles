@@ -79,5 +79,25 @@ pipeline {
             }
 
         }
+        stage('Deploy PROD'){
+            agent{label 'PROD'}
+            steps{
+                sh "mkdir -p /home/ubuntu/Final"
+                dir ('/home/ubuntu/Final'){
+                   cleanWs()
+                   git branch: 'main', url: 'https://github.com/jhossmar/jenkinsfiles.git' 
+                   sh "docker-compose rm -sf"
+                   sh "echo 'Y' | docker image prune -a"
+                   unstash 'backend'
+                   unstash 'frontend'
+                   sh "docker load -i backend.tar.gz"
+                   sh "docker load -i frontend.tar.gz"
+                   sh "docker-compose up -d"
+                }
+
+
+            }
+
+        }
     }
 }
