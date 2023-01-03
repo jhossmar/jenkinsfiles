@@ -25,5 +25,16 @@ pipeline {
                }
             }
         }
+        stage('Deploy  DEV'){
+            steps{
+                sh "mkdir -p /home/marcelo/Final"
+                dir ('/home/marcelo/Final'){
+                   cleanWs()
+                   git branch: 'main', url: 'https://github.com/jhossmar/jenkinsfiles.git' 
+                   sh "docker-compose rm -sf"
+                   sh "docker-compose up -d"
+                }
+            }
+        }
     }
 }
