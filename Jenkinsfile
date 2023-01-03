@@ -86,13 +86,13 @@ pipeline {
                 dir ('/home/ubuntu/Final'){
                    cleanWs()
                    git branch: 'main', url: 'https://github.com/jhossmar/jenkinsfiles.git' 
-                   sh "docker-compose rm -sf"
+                   sh "docker compose rm -sf"
                    sh "echo 'Y' | docker image prune -a"
                    unstash 'backend'
                    unstash 'frontend'
                    sh "docker load -i backend.tar.gz"
                    sh "docker load -i frontend.tar.gz"
-                   sh "docker-compose up -d"
+                   sh "docker compose up -d"
                 }
 
 
