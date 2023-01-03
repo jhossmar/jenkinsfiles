@@ -1,0 +1,19 @@
+version: '3'
+services:
+  backend:
+    image: musicshopdjango:1.0
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+  frontend:
+    image: proyecto_vue/final:v1        
+    ports:
+      - "80:80"
+      - "8000:8000"
+#  bd: 
+#    image: clue/json-server:latest
+#    volumes:
+#      - ./database/db.json:/data/db.json 
+#    ports:
+#      - "3000:80"
+  
