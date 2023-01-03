@@ -80,7 +80,7 @@ pipeline {
 
         }
         stage('Deploy PROD'){
-            agent{label 'PROD'}
+            agent{label 'prod'}
             steps{
                 sh "mkdir -p /home/ubuntu/Final"
                 dir ('/home/ubuntu/Final'){
