@@ -49,8 +49,9 @@ pipeline {
             steps{
                 sh "docker save proyecto_vue/final:v1 | gzip > frontend.tar.gz"
                 sh "docker save musicshopdjango:1.0 | gzip > backend.tar.gz"
-                stash name 'backend', include 'backend.tar.gz'
-                stash name 'frontend', include 'frontend.tar.gz'  
+                stash name: 'backend', includes: 'backend.tar.gz'
+                stash name: 'frontend', includes: 'frontend.tar.gz'
+                  
             }
         }
         stage('DeployQA'){
