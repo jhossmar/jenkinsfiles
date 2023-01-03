@@ -19,7 +19,8 @@ pipeline {
                dir('backend'){
                 sh "docker build -t musicshopdjango:1.0 ."
 
-               }dir('frontend'){
+               }
+               dir('frontend'){
                 sh "docker build -t proyecto_vue/final:v1  ."
                }
             }
