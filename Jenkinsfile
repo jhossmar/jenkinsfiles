@@ -1,3 +1,5 @@
+def dev_env=192.168.100.115;
+def qa_env=192.168.100.81;
 pipeline {
     agent {label 'DEV'}
 
@@ -35,6 +37,46 @@ pipeline {
                    sh "docker-compose up -d"
                 }
             }
+        }
+        stage('Testing DEV'){
+            steps{
+                sh "curl -v http://${dev_env}:80/"
+                sh "curl -v http://${dev_env}:8000/" 
+            }
+
+        }
+        stage('Docker save'){
+            steps{
+                sh "docker save proyecto_vue/final:v1 | gzip > frontend.tar.gz"
+                sh "docker save musicshopdjango:1.0 | gzip > backend.tar.gz"
+                stash name 'backend', include 'backend.tar.gz'
+                stash name 'frontend', include 'frontend.tar.gz'  
+            }
+        }
+        stage('DeployQA'){
+            agent{label 'debian'}
+            steps{
+                sh "mkdir -p /home/marcelo/Final"
+                dir ('/home/marcelo/Final'){
+                   cleanWs()
+                   git branch: 'main', url: 'https://github.com/jhossmar/jenkinsfiles.git' 
+                   sh "docker-compose rm -sf"
+                   sh "echo 'Y' | docker image prune -a"
+                   unstash 'backend'
+                   unstash 'frontend'
+                   sh "docker load -i backend.tar.gz"
+                   sh "docker load -i frontend.tar.gz"
+                   sh "docker-compose up -d"
+                }
+            }
+
+        }
+        stage('Testing QA'){
+            steps{
+                sh "curl -v http://${qa_env}:80/"
+                sh "curl -v http://${qa_env}:8000/" 
+            }
+
         }
     }
 }
