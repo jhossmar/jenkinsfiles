@@ -57,8 +57,8 @@ pipeline {
         stage('DeployQA'){
             agent{label 'debian'}
             steps{
-                sh "mkdir -p /home/marcelo/Final"
-                dir ('/home/marcelo/Final'){
+                sh "mkdir -p /home/debian/Final"
+                dir ('/home/debian/Final'){
                    cleanWs()
                    git branch: 'main', url: 'https://github.com/jhossmar/jenkinsfiles.git' 
                    sh "docker-compose rm -sf"
